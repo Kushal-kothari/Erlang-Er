@@ -1,0 +1,1214 @@
+c(tut).  --To compile.
+
+
+Modules are going to contain many kind of different functions.
+
+-module(tut).-->is always going to be the first statement of the erlen files.
+
+We also want to probably import different type of things.
+
+Eg:We want to import different type of strings  
+
+-----------PROGRAM ON HELLO WORLD-------------------
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([hello_world/0]).{here we can put n number of functions all in small letters}
+
+hello_world() ->
+    io:fwrite("Hello World\n").
+
+
+-------------------------------OUTPUT------------
+Eshell V10.6.4  (abort with ^G)
+1> c(tut).
+{ok,tut}
+2> tut:hello_world().
+Hello World
+ok
+
+----------------------------------------------
+
+export ke waha par function ka naam likho and then niche jaake define the function. Also We can also call function inside another function.
+
+Taking example of ADD function and in that also calling hello world.
+
+-----------------------------------------------
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([hello_world/0,add/2]).
+
+hello_world() ->
+    io:fwrite("Hello World\n").
+
+add(A,B) ->
+    hello_world(),  
+    A + B. 
+------------------------------------------------------------
+
+-----------------------OUTPUT----------------------------
+4> c(tut).           
+{ok,tut}
+5> tut:add(5,4).
+Hello World
+9
+
+----------------------------------------------------------
+We can see that it called hello world bcoz we printed that function and also 9.
+-----------------------------------------
+We can also do like this
+----------------------------------------
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([hello_world/0,add/3,add/4]).
+
+hello_world() ->
+    io:fwrite("Hello World\n").
+
+add(A,B,C,D) ->
+    hello_world(),  
+    A + B + C + D. 
+
+add(A,B,C) ->
+    hello_world(),  
+    A + B + C. 
+
+
+
+-------------------------------OUTPUT----------------------------
+
+10> c(tut).
+{ok,tut}
+11> tut:add(5,4,9).  //Adding three numbers instead of two.
+Hello World
+18 
+
+----------------------------------------------------------------
+
+Explanation:-
+1>module(tut). -->default hain hamesha likhna padega
+
+2>export -->
+
+
+export([function_name/parameters]).-->function ka naam phir niche jaake usko define krne kaa
+
+
+-----------------------------------------------
+one more command:tut:module_info(). -->gives the information of different modules inside.
+
+----------------------------------------------------
+We are calling a function var_stuff().Now variable name starts with an uppercase letter or an underscore and they contain either letters both uppercase or lowercase numbers,underscores or atoms.It is very much important to understand that variable values cannot chang however variable values can be defined dynamically.The type is going to be defined based on type of data we try to store inside.And also one more important thing we are calling the function before we are going to actually define it.
+
+--------------------------------------------------------
+main() ->
+    var_stuff(). 
+
+var_stuff() ->
+    Num=1,
+    Num.
+
+
+-----------------------------------------------------------
+
+16> tut:main().
+1
+---------------------------------------------------
+
+
+An atom is another variable whose name is going to be equal to its value and they are going to start with the lowercase letters 
+and they can simply just be word lowercase letter obviously  soorounded with single quotes.
+
+----------------------------------------------
+-export([main/0]).
+
+main() ->
+    atom_stuff(). 
+
+atom_stuff() ->
+    an_atom.          this will get print
+
+---------------------OUTPUT------------------------    
+
+24> tut:main().
+an_atom     (same is getting printed)
+
+-----------------------------------------
+if there is space inside it we have to use quotes
+
+-export([main/0]).
+
+main() ->
+    tom_stuff(). 
+
+tom_stuff() ->
+    'an atom'.
+    
+
+
+-----------OUTPUT-----------------------
+
+28> tut:main().
+'an atom'
+
+-----------------------------------
+
+Now coming to normal mathematSical functions.
+'/' will give with point answer
+'div' will give only integer 
+main() ->
+    do_math(5,4). 
+
+do_math(A,B) ->
+    A / B.
+
+-------------------OUTPUT------------------------
+36> c(tut).
+{ok,tut}
+37> tut:main().
+1.25
+
+-------------------------------------
+There is a whole different math library involved like instead of log use exp/sqrt sin/cos/tan/cosec/sec/cot etc.
+
+
+-export([main/0]).
+
+main() ->
+    do_math(5,4).
+
+do_math(A,B) ->
+    math:log(2.73).    
+
+
+23> tut:main().
+1.0043016091968684
+
+---------------------------------
+If we want to generate a random value from 1 to 10 .
+
+main() ->
+    do_math(5,4).
+
+do_math(A,B) ->
+    rand:uniform(10).    
+
+
+----------------------------------------------
+NOw to compare 2 values or basically anything
+
+main() ->
+    compare(4,4.0).
+
+compare(A,B) ->
+    A == B.    
+
+66> c(tut).    
+{ok,tut}
+67> tut:main().
+true
+
+use comparator:1> =:= Equal to
+	       2> =/= Not equal to
+	       3> == not checking floating point same toh same
+		4> /= Not equal to not checking floating point
+
+-----------------------------------------------------------
+We can also do  AND/OR/NOT etc and also > , < . >= , <= 
+So we can test different logical operator here as well
+
+
+
+compare(A,B) ->
+    Age = 18,
+    (Age >= 5) and (Age =< 17).   
+
+74> tut:main().
+false
+
+----------------------------------------------------------------
+
+Now coming to If/else etc see semicolon and at the end write end.
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    what_grade(10).
+
+
+preschool() ->
+    'Go to preschool'.    
+
+kindergarten() ->
+    'Go to kindergarten'.    
+
+grade_school() ->
+    'Go to gradeschool'. 
+
+
+what_grade(X) ->
+
+    if X < 5 -> preschool()
+    ; X == 5 -> kindergarten()
+    ; X > 5 -> grade_school()
+    end.
+
+-------------OUTPUT-----------------------------
+75> c(tut).    
+{ok,tut}
+76> tut:main().
+'Go to gradeschool'
+
+
+------------------------------------------------
+CASE CONDITIONS:
+
+main() ->
+    say_hello(german).
+
+say_hello(X) ->
+    case X of
+        french -> 'Bonjour';
+        german -> 'Gutentag';
+        english -> 'Hello'
+    end.
+
+------------------------------------------------
+OUTPUT
+
+79> c(tut).    
+{ok,tut}
+80> tut:main().
+'Guten tag'
+
+-------------------------------------------------------
+----------------STRINGS IN ERLANG----------------------
+
+main() ->
+    string_stuff().
+
+string_stuff() ->
+    Str1 = "Random string",   //String sorrounded by double quotes and uppercase
+    Str2 = "Another String",
+
+    io:fwrite("String : ~p ~p\n", [Str1, Str2]),   //to place the string or any data we use a tilde and p                 //p se doble comma ayega
+
+    Str3 = io_lib:format("It's a ~s and ~s\n", [Str1, Str2]),      //format se no double inverted commas
+    io:fwrite(Str3),
+    len(Str3),
+
+    Str4 = concat(Str1, Str2),
+    Str4.
+
+    CharIndex = chr(Str4, $n),     ///to find a particular string from strings 
+    CharIndex,
+
+
+    Str5 = substr(Str4, 8 ,9),  //str4 ka substring print krega which starts from 8 and will contain len = 9 
+    Str5,
+
+    to_upper(Str1).    //similarly lower also 
+	
+
+
+------------------------------OUTPUT-------------------------
+90> tut:main().
+String : "Random string" "Another String"
+It's a Random string and Another String
+"Random stringAnother String"
+3
+"stringAno"
+"RANDOM STRING"
+-------------------------------------------------------------
+
+TUPLES IS GOING TO BE ABLE TO HOLD MULTIPLE VALUES 
+
+
+main() ->
+    tuple_stuff().
+
+tuple_stuff() ->
+    My_Data = {42,175,6.25},
+    My_Data,			//print tuple
+
+    {A,B,C} = My_Data,          //we can also store the values of tuple inside another tuple
+    A.
+
+------------------OUTPUT--------------------
+112> c(tut).
+tut.erl:13: Warning: variable 'B' is unused
+tut.erl:13: Warning: variable 'C' is unused
+{ok,tut}
+113> tut:main().
+42
+
+---------------------------------------------------------------
+
+----------------------LISTS---------------------------------
+
+list are going to contain multiple values from any datatypes.
+
+
+
+main() ->
+    list_stuff().
+
+list_stuff() ->
+    List1 = [1,2,3],
+    List2 = [4,5,6], 
+
+    List3 = List1 ++ List2,
+    List3,
+
+    List4 = List3 -- List1, 
+    List4,
+
+    hd(List4),
+    tl(List4).
+
+
+    List5 = [9|List4],   //concat the list with 9
+    List5.
+
+----------------------------------------------------
+
+LIST COMPREHENSION makes it very easy to manipulate the list.
+
+main() ->
+    lc_stuff().
+
+lc_stuff() ->
+
+    List1 = [1,2,3],
+    List2 = [2*N || N <- List1],
+    List2.
+
+------------------------OUTPUT---------------------------
+142> tut:main().
+[2,4,6]
+
+--------------------------------------------------------
+
+main() ->
+    lc_stuff().
+
+lc_stuff() ->
+
+    List1 = [1,2,3],
+    List2 = [2*N || N <- List1],      //by pipe we are performing any operation we can perform like here one by one we are multiplying it by 2
+    List2,
+
+    List3 = [1,2,3,4],
+    List4 = [N || N <- List3, N rem 2 == 0],    ///list mein sirf even chaiye toh 
+    List4.
+
+----------------OUTPUT--------------------
+150> c(tut).    
+tut.erl:12: Warning: the result of the expression is ignored (suppress the warning by assigning the expression to the _ variable)
+{ok,tut}
+151> tut:main().
+[2,4]
+
+------------------------------------------------
+
+We can also search through a values of tuples like jiska bhi temperature 65 se jyada usko nikal
+
+    City_Weather = [{pittsburg, 50}, {'new york', 53},{charlotte, 68},{miami, 78}],
+
+    Great_Temp = [{City, Temp} || {City, Temp} <- City_Weather,Temp >= 65 ],
+    Great_Temp.
+
+--------------------OUTPUT------------------------------
+
+153> c(tut).    
+tut.erl:12: Warning: the result of the expression is ignored (suppress the warning by assigning the expression to the _ variable)
+{ok,tut}
+154> tut:main().
+[{charlotte,68},{miami,78}]
+
+---------------------------------------------------------------
+
+----------TYPE CONVERSIONS---google the list for type conversion from list to tuple etc--------------------------------
+main() ->
+    type_stuff().
+
+type_stuff() ->
+    is_atom(name),
+    is_float(3.14),
+    is_integer(10),
+    is_boolean(false),
+    is_list([1,2,3]),
+    is_tuple({height, 6.24}),
+
+    A = integer_to_list(20),
+    A. 
+
+---------OUTPUT--------------------------------------------
+160> tut:main().
+"20"
+
+---------------------------------------------------
+
+--------------------------RECURSION-------------------------
+
+ io:fwrite("Factorial : ~p\n", [Y]).  //to print
+
+
+
+-export([main/0]).
+
+main() ->
+    find_factorial(3).
+
+factorial(N) when N == 0 -> 1;
+factorial(N) when N > 0 -> N * factorial(N - 1).
+
+find_factorial(X) ->
+    Y = factorial(X),
+    io:fwrite("Factorial : ~p\n", [Y]).
+
+----------------------OUTPUT--------------------------------
+163> c(tut).    
+{ok,tut}
+164> tut:main().
+Factorial : 6
+ok
+
+
+--------------------------------------------
+HEAD RECURSIVE
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    sum([1,2,3]).
+
+---------------------------
+OUTPUT:
+165> c(tut).    
+{ok,tut}
+166> tut:main().
+6
+
+------------------------------------------------------
+Erlang doesnt contain for loop So we can use recursion here
+
+
+-export([main/0]).
+
+main() ->
+    for(3,1).
+
+
+for(0, _) -> 
+    ok;
+
+for(Max, Min) when Max > 0 ->
+    io:fwrite("Num : ~p\n", [Max]),
+    for(Max-1, Min).   
+
+
+---------------------OUTPUT_-----------------------
+169> c(tut).    
+{ok,tut}
+170> tut:main().
+Num : 3
+Num : 2
+Num : 1
+ok
+
+--------------------------------------------------------
+---------------------MAPS--------------------------------
+
+
+Map is a grouping of key value pairs
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    map_stuff().
+
+map_stuff() ->
+    Bob = #{f_name => 'Bob', l_name => 'Smith'},  //key is f_name and l_name now we can work out things with it.
+
+    io:fwrite("1st Name : ~p\n", [maps:get(f_name, Bob)]).   //getting a value assigned to a key by [maps:get(f_name, Bob)])
+
+
+------output--------
+
+172> c(tut).    
+{ok,tut}
+173> tut:main().
+1st Name : 'Bob'
+ok
+
+---------------------------------------------------------------
+
+1>To get the name of the keys use:  io:fwrite("1st Name : ~p\n", [maps:keys(Bob)]).
+
+-----------------------------------------------------------
+2>To get the name of the values use:  io:fwrite("1st Name : ~p\n", [maps:values(Bob)]).
+
+---------------OUTPUT------------------
+179> c(tut).    
+{ok,tut}
+180> tut:main().
+1st Name : ['Bob','Smith']
+ok
+
+-----------------------------------------	
+If we dont want say last name so there is one more function 'remove'.
+
+    io:fwrite("1st Name : ~p\n", [maps:remove(l_name,Bob)]).
+
+
+---------------------------OUTPUT-------------------------------
+181> c(tut).    
+{ok,tut}
+182> tut:main().
+1st Name : #{f_name => 'Bob'}
+ok
+
+--------------------------------------------------------------
+if we want to check if the key exist:
+map_stuff() ->
+    Bob = #{f_name => 'Bob', l_name => 'Smith'},
+
+    maps:find(f_name,Bob).
+
+------------------------OUTPUT--------------------------
+
+183> c(tut).    
+{ok,tut}
+184> tut:main().
+1st Name : #{f_name => 'Bob'}
+{ok,'Bob'}
+
+
+-----------------------------------------------------------
+
+
+If we want to add another key with value  use:
+
+
+map_stuff() ->
+    Bob = #{f_name => 'Bob', l_name => 'Smith'},
+
+    maps:put(address,"A-102",Bob).
+
+
+---------------------------OUTPUT------------------------------------
+187> c(tut).    
+{ok,tut}
+188> tut:main().
+1st Name : #{f_name => 'Bob'}
+#{address => "A-102",f_name => 'Bob',l_name => 'Smith'}
+
+--------------------------------------------------------------------
+
+---------------------------RECORDS-----------------------------------
+
+we will be able to define a custom type that is going to contain multiple different fields 
+
+
+main() ->
+    record_stuff().
+
+-record(customer, {name = "", bal = 0.00}).      //defining a record of customer and whatever we want to have inside that.Inside we are defining also balance which is zero bydefault.
+
+record_stuff() ->
+    Sally = #customer{name = "Sally Smith", bal = 100.00},            //defining name and balance
+    Sally2 = Sally#customer{bal = 50},   //changing the data of balance to 50
+
+    io:fwrite("~p owes $ ~p\n", [Sally2#customer.name, Sally2#customer.bal]).    //output this information
+
+--------------------------OUTPUT-------------------------------
+
+189> c(tut).    
+{ok,tut}
+190> tut:main().
+"Sally Smith" owes $ 50
+
+
+----------------------------------------------
+
+-----------HIGHER ORDER FUNCTIONS---------------
+
+Functions that can recieve other functions as a parameter is known as higher order functions.
+
+main() ->
+    do_math2().
+
+triple(X) -> X * 3.
+
+do_math2() ->
+    lists:map(fun triple/1, [1,2,3]).
+
+
+---------------------------OUTPUT--------------------------------
+{ok,tut}
+192> tut:main().
+[3,6,9]
+
+---------------------------------------------------------
+Eg:2
+
+main() ->
+    fun_stuff("Kushal").
+
+fun_stuff(N) ->
+    Fun_stuff = fun() -> io:fwrite("Hello ~p\n", [N]) end,
+    Fun_stuff().
+
+----------OUTPUT----------------------
+193> c(tut).    
+{ok,tut}
+194> tut:main().
+Hello "Kushal"
+ok
+
+--------------------------------------------------------------------
+Eg:3
+
+main() ->
+    fun_stuff2().
+
+fun_stuff2() ->
+    X = 3,
+    Y = 4,
+    Z = fun() ->
+        io:fwrite("Sum : ~p\n", [X + Y]) end,
+    Z().    
+  
+
+---------------------OUTPUT-------------------
+207> c(tut).    
+{ok,tut}
+208> tut:main().
+Sum : 7
+ok
+
+---------------------------------------------
+                            FILE I/O
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    write_txt("Write to the file"),
+    write_txt2(" More txt to the file"),
+    read_txt().
+
+write_txt(N) ->
+    {ok, Fh} =file:open("MyFile.txt",[write]),
+    file:write(Fh,N).
+
+write_txt2(N) ->
+    {ok, Fh} =file:open("MyFile.txt",[append]),
+    file:write(Fh,N).
+
+
+read_txt() ->
+    {ok, File} = file:open("MyFile.txt", [read]),
+    Words = file:read(File, 1024 * 1024),
+    io:fwrite("~p\n", [Words]). 
+   
+
+  ---------------------OUTPUT-------------------------
+211> c(tut).    
+{ok,tut}
+212> tut:main().
+{ok,"Write to the file More txt to the file"}
+ok
+
+
+--------------------------------------------------------
+
+__________________ EXCEPTION  HANDLING  _________________________
+
+NormALLY AND after dividing by zero
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    error_stuff(4).
+
+error_stuff(N) ->
+    try
+        Ans = 2 / N,
+        Ans
+    catch
+        error:badarith ->
+            "Can't divide by zero"
+    end.
+   
+-------OUTPUT-------------------------
+
+213> c(tut).    
+{ok,tut}
+214> tut:main().
+0.5
+
+
+--------------------------------
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    error_stuff(0).
+
+error_stuff(N) ->
+    try
+        Ans = 2 / N,
+        Ans
+    catch
+        error:badarith ->      //can also use _:_ for possibly all errors.
+            "Can't divide by zero"
+    end.
+   
+
+----------------------OUTPUT------------------------
+215> c(tut).    
+{ok,tut}
+216> tut:main().
+"Can't divide by zero"
+
+------------------------------------
+
+----------------------------------------------------------------
+
+-------------------------- MACROS -------------------------
+
+Macros provide for inline code replacement 
+
+
+-module(tut).
+-import(string, [len/1, concat/2, chr/2, substr/3, str/2, to_lower/1, to_upper/1]).
+
+-export([main/0]).
+
+main() ->
+    macro_stuff(5,6).
+
+-define(add(X,Y), {X + Y}).		//defining a macros passing 2 parameters and after that defining exactly what is going to happen with X and Y inside
+
+macro_stuff(X, Y) ->   //first defining macro_stuff upar and then now this is going to reciece our macro
+    io:fwrite("~p\n", [?add(X,Y)]).    //"?" to call a macro and then do normally.
+  
+----------OUTPUT-------------------------
+222> c(tut).    
+{ok,tut}
+223> tut:main().
+{11}
+ok
+
+--------------------------------
+---------CONCURRENCY--------------
+
+Concurrency is when several processes are going to execute at the same time and potentially interact.And as long as processes aren't independent on each other they can run at the same time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ok
+
+
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sum([]) -> 0;
+sum([H|T]) -> H + sum(T).    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
